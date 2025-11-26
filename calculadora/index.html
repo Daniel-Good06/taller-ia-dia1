@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculadora</title>
+  <style>
+    body{font-family:Segoe UI,Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background-color:#f8f3f8;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><defs><linearGradient id='g' x1='0' x2='0' y1='0' y2='1'><stop offset='0' stop-color='rgb(255,180,60)'/><stop offset='0.6' stop-color='rgb(255,100,50)'/><stop offset='1' stop-color='rgb(40,10,70)'/></linearGradient></defs><rect width='800' height='600' fill='url(%23g)'/><circle cx='400' cy='300' r='80' fill='rgba(255,230,180,0.95)'/><path d='M0 420 C150 360 250 460 400 440 C550 420 680 480 800 430 L800 600 L0 600 Z' fill='rgb(20,10,30)' opacity='0.6'/><path d='M0 480 C120 440 220 520 380 500 C520 480 680 540 800 500 L800 600 L0 600 Z' fill='rgb(30,15,40)' opacity='0.8'/></svg>");background-repeat:no-repeat;background-size:cover;background-position:center}
+    body.no-bg{background-image:none;background-color:linear-gradient(180deg,#e6f0ff,#f8fbff)}
+    .calculator{background:rgba(11,50,86,0.85);color:#fff;padding:18px;border-radius:14px;box-shadow:0 14px 40px rgba(2,18,45,.35);width:520px;max-width:95%;backdrop-filter:blur(6px);position:relative;z-index:2}
+    /* capa para fondos animados */
+    #bg-layer{position:fixed;inset:0;z-index:0;background-repeat:no-repeat;background-size:cover;background-position:center;pointer-events:none}
+    /* Playa: olas animadas (simulación sencilla) */
+    #bg-layer.beach::after{content:'';position:absolute;left:0;right:0;bottom:0;height:160px;background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));background-size:200% 100%;opacity:0.55;animation:wave 6s linear infinite}
+    #bg-layer.beach::before{content:'';position:absolute;left:0;right:0;bottom:20px;height:120px;background:linear-gradient(90deg,rgba(255,255,255,0.03) 0%,rgba(255,255,255,0.0) 50%,rgba(255,255,255,0.03) 100%);background-size:200% 100%;opacity:0.25;animation:wave 10s linear infinite}
+    @keyframes wave{from{background-position:0 0}to{background-position:200% 0}}
+    /* Noche: estrellas fugaces */
+    #bg-layer.night .shooting-star{position:absolute;width:3px;height:3px;background:linear-gradient(90deg,#fff,#fff);border-radius:2px;opacity:0;transform:translate3d(0,0,0);animation:shoot 1200ms linear forwards}
+    @keyframes shoot{0%{opacity:1;transform:translate3d(0,0,0) scaleX(1)}100%{opacity:0;transform:translate3d(-500px,400px,0) scaleX(6)}}
+    .display{background:rgba(255,255,255,0.06);padding:16px;border-radius:10px;text-align:right;font-size:36px;min-height:64px;overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
+    .keys{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:16px}
+    .bg-select{background:rgba(255,255,255,0.06);color:#e6f7ff;border-radius:8px;padding:8px 10px;font-size:14px;border:none;outline:none}
+    .sci-keys{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:16px}
+    .main-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+    .keys{display:flex;flex-direction:column}
+    button{font-size:16px;padding:12px;border-radius:8px;border:none;cursor:pointer;color:#08304d}
+    button.function{background:rgba(255,255,255,0.12);color:#e6f7ff}
+    button.operator{background:#2ea0ff;color:#00203f}
+    button.equal{background:#0047b3;color:#fff;grid-column:span 2}
+    button.clear{background:#ff6b6b;color:#fff}
+    button.digit{background:rgba(255,255,255,0.06);color:#e6f7ff}
+    .small{font-size:14px;padding:10px}
+  </style>
+</head>
+<body>
+  <div id="bg-layer" aria-hidden="true"></div>
+  <div class="calculator" role="application" aria-label="Calculadora científica">
+    <div id="display" class="display" aria-live="polite">0</div>
+
+    <div class="keys">
+      <div class="sci-keys">
+        <button class="function small" data-action="sin">sin</button>
+        <button class="function small" data-action="cos">cos</button>
+        <button class="function small" data-action="tan">tan</button>
+        <button class="function small" data-action="ln">ln</button>
+        <button class="function small" data-action="log">log</button>
+        <button class="function small" data-action="sqrt">√</button>
+
+        <button class="function small" data-action="pow">xʸ</button>
+        <button class="function small" data-action="sq">x²</button>
+        <button class="function small" data-action="cube">x³</button>
+        <button class="function small" data-action="fact">n!</button>
+        <button class="function small" data-action="pi">π</button>
+        <button class="function small" data-action="e">e</button>
+
+        <button class="function small" data-action="inv">1/x</button>
+        <button class="function small" data-action="exp">eˣ</button>
+        <button class="function small" data-action="mod">mod</button>
+        <button class="function small" data-action="pow2">^</button>
+        <button class="function small" data-action="c2f">C→F</button>
+        <button class="function small" data-action="f2c">F→C</button>
+
+        <button class="function small" data-action="bg-toggle">Fondo: On</button>
+        <select id="bg-select" class="bg-select" aria-label="Seleccionar fondo">
+          <option value="sunset">Atardecer (por defecto)</option>
+          <option value="mountains">Montañas</option>
+          <option value="beach">Playa</option>
+          <option value="forest">Bosque</option>
+          <option value="night">Noche estrellada</option>
+        </select>
+        <button class="function small" data-action="posneg">+/-</button>
+        <button class="function small" data-action="percent">%</button>
+        <button class="function small" data-action="backspace">←</button>
+        <button class="function small" data-action="clear">C</button>
+      </div>
+
+      <div class="main-keys">
+        <button class="digit" data-digit="7">7</button>
+        <button class="digit" data-digit="8">8</button>
+        <button class="digit" data-digit="9">9</button>
+        <button class="operator" data-action="/">÷</button>
+
+        <button class="digit" data-digit="4">4</button>
+        <button class="digit" data-digit="5">5</button>
+        <button class="digit" data-digit="6">6</button>
+        <button class="operator" data-action="*">×</button>
+
+        <button class="digit" data-digit="1">1</button>
+        <button class="digit" data-digit="2">2</button>
+        <button class="digit" data-digit="3">3</button>
+        <button class="operator" data-action="-">−</button>
+
+        <button class="digit" data-digit="0" style="grid-column:span 2">0</button>
+        <button class="digit" data-digit=".">.</button>
+        <button class="equal" data-action="=">=</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

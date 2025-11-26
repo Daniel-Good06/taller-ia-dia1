@@ -1,0 +1,430 @@
+/* ========================================
+   VARIABLES Y ESTILOS GENERALES
+   ======================================== */
+
+:root {
+    --primary-color: #00d4ff;
+    --secondary-color: #ff006e;
+    --dark-bg: #0a0e27;
+    --darker-bg: #050812;
+    --text-color: #e0e0e0;
+    --alarm-color: #ff006e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ========================================
+   CONTENEDOR PRINCIPAL
+   ======================================== */
+
+.container {
+    background: rgba(10, 14, 39, 0.9);
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 0 50px rgba(0, 212, 255, 0.3);
+    animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 50px rgba(0, 212, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 80px rgba(0, 212, 255, 0.6);
+    }
+}
+
+/* ========================================
+   SALUDO DINÁMICO
+   ======================================== */
+
+.saludo {
+    text-align: center;
+    font-size: 28px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+/* ========================================
+   DISPLAY DEL RELOJ
+   ======================================== */
+
+.clock-display {
+    background: rgba(5, 8, 18, 0.95);
+    border: 3px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px 0;
+    text-align: center;
+    box-shadow: inset 0 0 30px rgba(0, 212, 255, 0.2);
+}
+
+.tiempo {
+    font-size: 72px;
+    font-weight: bold;
+    color: var(--primary-color);
+    letter-spacing: 5px;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+    font-family: 'Courier New', monospace;
+    margin-bottom: 15px;
+}
+
+/* ========================================
+   BOTÓN TOGGLE MODO 12H/24H
+   ======================================== */
+
+.modo-toggle {
+    text-align: center;
+}
+
+.btn-modo {
+    background: var(--primary-color);
+    color: var(--darker-bg);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}
+
+.btn-modo:hover {
+    background: var(--secondary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.btn-modo:active {
+    transform: scale(0.95);
+}
+
+/* ========================================
+   DISPLAY DE FECHA
+   ======================================== */
+
+.fecha-display {
+    text-align: center;
+    font-size: 18px;
+    color: var(--primary-color);
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.fecha-display p {
+    margin: 0;
+    text-transform: capitalize;
+}
+
+/* ========================================
+   SECCIÓN DE ALARMA
+   ======================================== */
+
+.alarm-section {
+    background: rgba(0, 212, 255, 0.05);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 25px 0;
+}
+
+.alarm-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ========================================
+   GRUPO DE INPUT
+   ======================================== */
+
+.alarm-input-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.alarm-input-group label {
+    color: var(--text-color);
+    font-weight: bold;
+    min-width: 140px;
+}
+
+.input-time {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px;
+    background: rgba(5, 8, 18, 0.95);
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-size: 16px;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.input-time:focus {
+    outline: none;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.input-time::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+/* ========================================
+   BOTONES DE CONTROL
+   ======================================== */
+
+.alarm-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Courier New', monospace;
+}
+
+.btn-establecer {
+    background: var(--primary-color);
+    color: var(--darker-bg);
+}
+
+.btn-establecer:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+}
+
+.btn-establecer:active {
+    transform: translateY(-1px);
+}
+
+.btn-cancelar {
+    background: rgba(255, 0, 110, 0.8);
+    color: white;
+}
+
+.btn-cancelar:hover {
+    background: var(--secondary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 0, 110, 0.4);
+}
+
+.btn-cancelar:active {
+    transform: translateY(-1px);
+}
+
+.btn-detener {
+    background: var(--secondary-color);
+    color: white;
+    flex: 1;
+}
+
+.btn-detener:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 0, 110, 0.4);
+}
+
+/* ========================================
+   INDICADOR DE ESTADO DE ALARMA
+   ======================================== */
+
+.alarm-status {
+    background: rgba(5, 8, 18, 0.95);
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+}
+
+.alarm-status p {
+    margin: 0;
+    font-size: 16px;
+    color: var(--primary-color);
+}
+
+.alarm-status.active {
+    border-color: var(--secondary-color);
+    background: rgba(255, 0, 110, 0.1);
+}
+
+.alarm-status.active p {
+    color: var(--secondary-color);
+    font-weight: bold;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* ========================================
+   ÁREA DE NOTIFICACIÓN
+   ======================================== */
+
+.notificacion {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.notificacion.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.alarm-notification {
+    background: var(--darker-bg);
+    border: 3px solid var(--secondary-color);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: 0 0 100px rgba(255, 0, 110, 0.8);
+}
+
+.alarm-notification h2 {
+    font-size: 48px;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    animation: blink 0.6s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 49% {
+        opacity: 1;
+    }
+    50%, 100% {
+        opacity: 0.3;
+    }
+}
+
+.alarm-notification p {
+    font-size: 24px;
+    color: var(--text-color);
+    margin-bottom: 30px;
+}
+
+.alarm-notification .btn-detener {
+    min-width: 200px;
+    padding: 15px 30px;
+    font-size: 16px;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 25px;
+    }
+
+    .tiempo {
+        font-size: 48px;
+        letter-spacing: 3px;
+    }
+
+    .saludo {
+        font-size: 20px;
+    }
+
+    .alarm-input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .alarm-input-group label {
+        min-width: auto;
+    }
+
+    .input-time {
+        min-width: auto;
+    }
+
+    .alarm-buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        min-width: auto;
+    }
+
+    .alarm-notification {
+        padding: 30px 20px;
+        margin: 20px;
+    }
+
+    .alarm-notification h2 {
+        font-size: 36px;
+    }
+
+    .alarm-notification p {
+        font-size: 18px;
+    }
+}
