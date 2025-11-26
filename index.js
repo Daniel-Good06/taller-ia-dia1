@@ -15,4 +15,5 @@ rl.question('Por favor, ingresa tu nombre: ', (nombre) => {
     rl.close();
 });
 
+//Codigo que defina cual numero es mayor y cual el menor
 
