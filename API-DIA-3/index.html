@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex - Buscador de Pokemon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #pokemonInput {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        #pokemonInput:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        #searchBtn {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #searchBtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        #searchBtn:active {
+            transform: translateY(0);
+        }
+
+        .pokemon-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.6s ease-out;
+            display: none;
+        }
+
+        .pokemon-card.show {
+            display: block;
+        }
+
+        .pokemon-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .pokemon-image {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            display: block;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+            animation: bounce 1s ease-in-out;
+        }
+
+        .pokemon-name {
+            font-size: 2.5rem;
+            color: #333;
+            text-transform: capitalize;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .pokemon-id {
+            color: #888;
+            font-size: 1.2rem;
+        }
+
+        .pokemon-types {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .type-badge {
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .type-normal {
+            background: #A8A878;
+        }
+
+        .type-fire {
+            background: #F08030;
+        }
+
+        .type-water {
+            background: #6890F0;
+        }
+
+        .type-electric {
+            background: #F8D030;
+            color: #333;
+        }
+
+        .type-grass {
+            background: #78C850;
+        }
+
+        .type-ice {
+            background: #98D8D8;
+        }
+
+        .type-fighting {
+            background: #C03028;
+        }
+
+        .type-poison {
+            background: #A040A0;
+        }
+
+        .type-ground {
+            background: #E0C068;
+        }
+
+        .type-flying {
+            background: #A890F0;
+        }
+
+        .type-psychic {
+            background: #F85888;
+        }
+
+        .type-bug {
+            background: #A8B820;
+        }
+
+        .type-rock {
+            background: #B8A038;
+        }
+
+        .type-ghost {
+            background: #705898;
+        }
+
+        .type-dragon {
+            background: #7038F8;
+        }
+
+        .type-dark {
+            background: #705848;
+        }
+
+        .type-steel {
+            background: #B8B8D0;
+        }
+
+        .type-fairy {
+            background: #EE99AC;
+        }
+
+        .pokemon-stats {
+            margin-top: 2rem;
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-name {
+            width: 150px;
+            font-weight: 600;
+            color: #555;
+            text-transform: capitalize;
+        }
+
+        .stat-bar-container {
+            flex: 1;
+            background: #e0e0e0;
+            border-radius: 50px;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        .stat-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50px;
+            transition: width 1s ease-out;
+        }
+
+        .stat-value {
+            width: 50px;
+            text-align: right;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .pokemon-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .error-message {
+            background: #ff4444;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .loading {
+            text-align: center;
+            color: #667eea;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .pokemon-name {
+                font-size: 2rem;
+            }
+
+            .pokemon-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔍 Pokedex</h1>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="pokemonInput" placeholder="Buscar pokemon (ej: pikachu, charizard...)">
+                <button id="searchBtn">Buscar</button>
+            </div>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="loading" id="loading">Buscando pokemon...</div>
+        </div>
+
+        <div class="pokemon-card" id="pokemonCard">
+            <div class="pokemon-header">
+                <img id="pokemonImage" class="pokemon-image" src="" alt="Pokemon">
+                <h2 class="pokemon-name" id="pokemonName"></h2>
+                <p class="pokemon-id" id="pokemonId"></p>
+                <div class="pokemon-types" id="pokemonTypes"></div>
+            </div>
+
+            <div class="pokemon-info">
+                <div class="info-item">
+                    <div class="info-label">Altura</div>
+                    <div class="info-value" id="pokemonHeight"></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Peso</div>
+                    <div class="info-value" id="pokemonWeight"></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Experiencia Base</div>
+                    <div class="info-value" id="pokemonExp"></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Habilidades</div>
+                    <div class="info-value" id="pokemonAbilities"></div>
+                </div>
+            </div>
+
+            <div class="pokemon-stats" id="pokemonStats"></div>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+</body>
+
+</html>
