@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Descubre y busca libros de cualquier género con BookFinder - Tu biblioteca digital">
+    <title>BookFinder - Descubre Tu Próxima Lectura</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<div class="search-container">
+    <div class="search-box">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar libros por título, autor o tema..."
+            autocomplete="off">
+        <button id="searchBtn" class="search-btn">
+            <span>Buscar</span>
+        </button>
+    </div>
+</div>
+</section>
+
+<!-- Loading Indicator -->
+<div class="loading" id="loading">
+    <div class="book-loader">
+        <div class="book">
+            <div class="book-page"></div>
+            <div class="book-page"></div>
+            <div class="book-page"></div>
+        </div>
+    </div>
+    <p>Buscando libros...</p>
+</div>
+
+<!-- Results Info -->
+<div class="results-info" id="resultsInfo"></div>
+
+<!-- Books Grid -->
+<section class="books-grid" id="booksGrid">
+    <!-- Books will be dynamically inserted here -->
+</section>
+
+<!-- No Results Message -->
+<div class="no-results" id="noResults">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+    </svg>
+    <h3>No se encontraron libros</h3>
+    <p>Intenta con otros términos de búsqueda</p>
+</div>
+</main>
+
+<!-- Book Detail Modal -->
+<div class="modal" id="bookModal">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-content">
+        <button class="modal-close" id="modalClose">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <div class="modal-body" id="modalBody">
+            <!-- Book details will be inserted here -->
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+
+</html>

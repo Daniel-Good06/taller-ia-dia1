@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explora el universo de Rick and Morty - Busca y descubre personajes">
+    <title>Rick and Morty - Explorador de Personajes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Floating UFOs -->
+    <div class="ufo ufo-1">🛸</div>
+    <div class="ufo ufo-2">🛸</div>
+    <div class="ufo ufo-3">🛸</div>
+
+    <!-- Shooting Stars -->
+    <div class="shooting-star shooting-star-1">⭐</div>
+    <div class="shooting-star shooting-star-2">✨</div>
+    <div class="shooting-star shooting-star-3">💫</div>
+
+    <!-- Portal Effects -->
+    <div class="portal portal-1"></div>
+    <div class="portal portal-2"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🛸 Rick and Morty</h1>
+            <p>Explora el multiverso y descubre todos los personajes</p>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar personajes por nombre...">
+                <button id="searchBtn" class="btn">🔍 Buscar</button>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="alive">Vivos</button>
+            <button class="filter-btn" data-filter="dead">Muertos</button>
+            <button class="filter-btn" data-filter="unknown">Desconocido</button>
+        </section>
+
+        <!-- Cards Container -->
+        <div id="cardsContainer" class="cards-grid">
+            <!-- Las tarjetas se generarán dinámicamente aquí -->
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="pagination">
+            <!-- La paginación se generará dinámicamente aquí -->
+        </div>
+    </div>
+
+    <!-- Modal for Character Details -->
+    <div id="characterModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-body" id="modalBody">
+                <!-- El contenido se generará dinámicamente aquí -->
+            </div>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+</body>
+
+</html>
